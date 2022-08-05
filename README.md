@@ -9,3 +9,8 @@ while using BQ, installation of [google-providers](https://pypi.org/project/apac
 explanation of [AF](https://harshilp.medium.com/101-guide-on-apache-airflow-operators-f9707d8b86c7)  
 
 gcloud config set project Cloud_Engineering_Sandbox
+
+launch AF w/ the command  
+```
+airflow standalone
+```
