@@ -50,7 +50,7 @@ with DAG(
     
     create_table = BigQueryCreateEmptyTableOperator(
         # project_id ="tenacious-post-355715",
-        task_id="t11",
+        task_id="create_table",
         dataset_id="DATASET_NAME_9",
         table_id="test_table11",
         schema_fields=[
