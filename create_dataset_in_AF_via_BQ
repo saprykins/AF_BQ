@@ -5,6 +5,8 @@ from airflow.contrib.operators.bigquery_operator import BigQueryCreateEmptyTable
 
 from airflow.contrib.operators.bigquery_operator import BigQueryCreateEmptyDatasetOperator
 
+from airflow.contrib.operators.bigquery_check_operator import BigQueryCheckOperator
+
 from datetime import datetime, timedelta
 from textwrap import dedent
 
@@ -45,7 +47,7 @@ with DAG(
     catchup=False,
     tags=['example'],
 ) as dag:
-    
+    '''
     create_table = BigQueryCreateEmptyTableOperator(
         # project_id ="tenacious-post-355715",
         task_id="t11",
@@ -58,5 +60,18 @@ with DAG(
     )
     
     create_dataset = BigQueryCreateEmptyDatasetOperator(task_id="create_dataset", dataset_id="DATASET_NAME_8")
+    '''
 
+    check_count = BigQueryCheckOperator(
+        task_id="check_count",
+        sql=f"SELECT COUNT(*) FROM DATASET_NAME_8.sample_table_3",
+        use_legacy_sql=False,
+        # location=location,
+    )
+    
+    
+    '''
     create_dataset >> create_table
+    '''
+    check_count
+  
