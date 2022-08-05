@@ -39,7 +39,7 @@ with DAG(
         # 'on_retry_callback': another_function,
         # 'sla_miss_callback': yet_another_function,
         # 'trigger_rule': 'all_success'
-        'project_id':"tenacious-post-355715"
+        # 'project_id':"tenacious-post-355715"
     },
     description='AF_BQ DAG',
     schedule_interval=timedelta(days=1),
@@ -47,11 +47,11 @@ with DAG(
     catchup=False,
     tags=['example'],
 ) as dag:
-    '''
+    
     create_table = BigQueryCreateEmptyTableOperator(
         # project_id ="tenacious-post-355715",
         task_id="t11",
-        dataset_id="DATASET_NAME_8",
+        dataset_id="DATASET_NAME_9",
         table_id="test_table11",
         schema_fields=[
             {"name": "emp_name", "type": "STRING", "mode": "REQUIRED"},
@@ -59,8 +59,8 @@ with DAG(
             ],
     )
     
-    create_dataset = BigQueryCreateEmptyDatasetOperator(task_id="create_dataset", dataset_id="DATASET_NAME_8")
-    '''
+    create_dataset = BigQueryCreateEmptyDatasetOperator(task_id="create_dataset", dataset_id="DATASET_NAME_9")
+    
 
     check_count = BigQueryCheckOperator(
         task_id="check_count",
@@ -70,8 +70,8 @@ with DAG(
     )
     
     
-    '''
-    create_dataset >> create_table
-    '''
-    check_count
+    
+    create_dataset >> [create_table, check_count]
+    
+    
   
