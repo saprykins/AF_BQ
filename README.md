@@ -14,3 +14,4 @@ launch AF w/ the command
 ```
 airflow standalone
 ```
+[list](https://airflow.apache.org/docs/apache-airflow-providers-google/stable/_api/airflow/providers/google/cloud/operators/bigquery/index.html#airflow.providers.google.cloud.operators.bigquery.BigQueryCheckOperator) of BQ operators in AF  
