@@ -1,6 +1,3 @@
-# from airflow.contrib.operators.bigquery_operator import BigQueryOperator
-
-# create_dataset = BigQueryCreateEmptyDatasetOperator(task_id="create_dataset", dataset_id=DATASET_NAME)
 from airflow.contrib.operators.bigquery_operator import BigQueryCreateEmptyTableOperator
 
 from airflow.contrib.operators.bigquery_operator import BigQueryCreateEmptyDatasetOperator
@@ -39,7 +36,6 @@ with DAG(
         # 'on_retry_callback': another_function,
         # 'sla_miss_callback': yet_another_function,
         # 'trigger_rule': 'all_success'
-        # 'project_id':"tenacious-post-355715"
     },
     description='AF_BQ DAG',
     schedule_interval=timedelta(days=1),
@@ -47,31 +43,15 @@ with DAG(
     catchup=False,
     tags=['example'],
 ) as dag:
-    
-    create_table = BigQueryCreateEmptyTableOperator(
-        # project_id ="tenacious-post-355715",
-        task_id="create_table",
-        dataset_id="DATASET_NAME_9",
-        table_id="test_table11",
-        schema_fields=[
-            {"name": "emp_name", "type": "STRING", "mode": "REQUIRED"},
-            {"name": "salary", "type": "INTEGER", "mode": "NULLABLE"},
-            ],
-    )
-    
-    create_dataset = BigQueryCreateEmptyDatasetOperator(task_id="create_dataset", dataset_id="DATASET_NAME_9")
-    
 
     check_count = BigQueryCheckOperator(
         task_id="check_count",
-        sql=f"SELECT COUNT(*) FROM DATASET_NAME_8.sample_table_3",
+        sql=f"SELECT count(ID) FROM `ari-dp-prt-dev.raw_sales_c1.testTable` LIMIT 2",
         use_legacy_sql=False,
         # location=location,
     )
     
-    
-    
-    create_dataset >> [create_table, check_count]
-    
-    
-  
+
+    # create_dataset >> [create_table, check_count]
+
+    check_count
